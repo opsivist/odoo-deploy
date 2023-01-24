@@ -18,6 +18,7 @@ all:
       odoo_conf: /etc/odoo-ci.conf # Odoo configuration file
       odoo_service: odoo # Odoo service name
       python_version: "python3.8" # Python version
+      release_folder: release # Folder where to find wheel files
 ```
 
 Then run the ansible playbook:

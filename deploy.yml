@@ -3,7 +3,7 @@
   hosts: all
   remote_user: "{{ deploy_user }}"
   vars:
-    ansistrano_deploy_from: "{{ playbook_dir }}/release"
+    ansistrano_deploy_from: "{{ release_folder }}"
     ansistrano_deploy_to: "{{ deploy_folder }}"
     ansistrano_keep_releases: 3
     ansistrano_deploy_via: rsync
