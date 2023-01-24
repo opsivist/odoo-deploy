@@ -12,7 +12,5 @@
     ansistrano_before_symlink_tasks_file: "{{ playbook_dir }}/tasks/before-symlink.yml"
     ansistrano_after_cleanup_tasks_file: "{{ playbook_dir }}/tasks/after-cleanup.yml"
   tasks:
-    - include_vars:
-        file: vars.yml
     - include_role:
         name: ansistrano.deploy

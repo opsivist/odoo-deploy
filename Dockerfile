@@ -1,16 +1,20 @@
 FROM alpine:latest
 
 RUN set -x \
-  && apk --update add \
+  && apk add --no-cache \
     ansible \
     openssh-client \
-    rsync \
-  && rm -rf /var/lib/apt/lists/*
+    rsync
 
-WORKDIR /ansible
+COPY --chown=root --chmod=644 ansible.cfg /etc/ansible/ansible.cfg
 
-COPY --chown=root --chmod=644 ssh_config /etc/ssh/ssh_config
-COPY tasks /ansible/tasks
-COPY ansible.cfg deploy.yml /ansible/
+RUN adduser -D -s /bin/sh gitlab-runner -g ""
+USER gitlab-runner
+
+WORKDIR /home/gitlab-runner/ansible
+
+COPY --chown=gitlab-runner --chmod=644 ssh_config /home/gitlab-runner/.ssh/config
+COPY --chown=gitlab-runner tasks /home/gitlab-runner/ansible/tasks
+COPY --chown=gitlab-runner deploy.yml /home/gitlab-runner/ansible/
 
 RUN  /usr/bin/ansible-galaxy install ansistrano.deploy ansistrano.rollback
