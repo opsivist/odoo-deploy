@@ -1,16 +1,16 @@
 ---
 - name: ODOO | Update DB
-  shell: "{{ deploy_folder }}/current/venv/bin/click-odoo-update -c {{ odoo_conf }} -d {{ dbname }} --i18n-overwrite --if-exists"
+  ansible.builtin.shell: "{{ deploy_folder }}/current/venv/bin/click-odoo-update -c {{ odoo_conf }} -d {{ dbname }} --i18n-overwrite --if-exists"
 
 - name: ODOO | Service stop
   become: true
-  systemd:
+  ansible.builtin.systemd:
     name: "{{ odoo_service }}"
     state: started
 
 - name: NGINX | Creating a symlink for odoo
   become: true
-  file:
+  ansible.builtin.file:
     src: "/etc/nginx/sites-available/{{ nginx_odoo_conf }}"
     dest: "/etc/nginx/sites-enabled/{{ nginx_enabled_conf }}"
     state: link
@@ -18,6 +18,6 @@
 
 - name: NGINX | Service reload
   become: true
-  systemd:
+  ansible.builtin.systemd:
     name: nginx
     state: reloaded
