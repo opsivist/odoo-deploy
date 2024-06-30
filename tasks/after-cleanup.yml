@@ -2,7 +2,7 @@
 - name: ODOO | Update DB
   ansible.builtin.shell: "{{ deploy_folder }}/current/venv/bin/click-odoo-update -c {{ odoo_conf }} -d {{ dbname }} --i18n-overwrite --if-exists"
 
-- name: ODOO | Service stop
+- name: ODOO | Service start
   become: true
   ansible.builtin.systemd:
     name: "{{ odoo_service }}"
